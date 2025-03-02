@@ -1,0 +1,52 @@
+<div class="bg-gray-700 rounded-lg p-4 mb-4">
+    <div class="flex justify-end mb-4">
+        <button onclick="updateButton(this, '0xWI')" 
+                class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center">
+            <i class="icon sync mr-2"></i>Update
+        </button>
+    </div>
+
+    <div class="space-y-6">
+        <div>
+            <h3 class="text-lg font-medium text-gray-300 mb-2">Current Connections</h3>
+            <div class="grid gap-2">
+                <% pageData.now.forEach((wifi) => { %>
+                <div class="bg-gray-600 p-3 rounded hover:bg-gray-500">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <div class="font-medium"><%= wifi.SSID %></div>
+                            <div class="text-sm text-gray-400"><%= wifi.BSSID %></div>
+                        </div>
+                    </div>
+                </div>
+                <% }) %>
+            </div>
+        </div>
+
+        <div>
+            <h3 class="text-lg font-medium text-gray-300 mb-2">Connection History</h3>
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead class="bg-gray-600">
+                        <tr>
+                            <th class="px-4 py-2 text-left">SSID</th>
+                            <th class="px-4 py-2 text-left">BSSID</th>
+                            <th class="px-4 py-2 text-left">First Seen</th>
+                            <th class="px-4 py-2 text-left">Last Seen</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% pageData.log.forEach((wifi) => { %>
+                        <tr class="border-b border-gray-600 hover:bg-gray-600">
+                            <td class="px-4 py-2"><%= wifi.SSID %></td>
+                            <td class="px-4 py-2"><%= wifi.BSSID %></td>
+                            <td class="px-4 py-2"><%= new Date(wifi.firstSeen).toLocaleString('en-GB', { timeZone: 'UTC' }) %></td>
+                            <td class="px-4 py-2"><%= new Date(wifi.lastSeen).toLocaleString('en-GB', { timeZone: 'UTC' }) %></td>
+                        </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

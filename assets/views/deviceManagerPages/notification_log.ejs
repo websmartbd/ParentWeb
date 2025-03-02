@@ -1,0 +1,31 @@
+<div class="bg-gray-700 rounded-lg p-4 mb-4">
+    <div class="overflow-x-auto">
+        <table class="w-full">
+            <thead class="bg-gray-600">
+                <tr>
+                    <th class="px-4 py-2 text-left">Time</th>
+                    <th class="px-4 py-2 text-left">App</th>
+                    <th class="px-4 py-2 text-left">Content</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% pageData.forEach((notification) => { %>
+                <tr class="border-b border-gray-600 hover:bg-gray-600">
+                    <td class="px-4 py-2"><%= new Date(parseInt(notification.postTime)).toLocaleString('en-GB', { timeZone: 'UTC' }) %></td>
+                    <td class="px-4 py-2">
+                        <a href="?filter=<%= notification.appName %>" class="text-blue-400 hover:text-blue-300">
+                            <%= notification.appName.substring(0,24) %>
+                        </a>
+                    </td>
+                    <td class="px-4 py-2">
+                        <div class="space-y-1">
+                            <div class="font-medium"><%= notification.title %></div>
+                            <div class="text-gray-400"><%= notification.content %></div>
+                        </div>
+                    </td>
+                </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+</div>

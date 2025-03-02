@@ -1,0 +1,34 @@
+<div class="bg-gray-700 rounded-lg p-4 mb-4">
+    <div class="flex justify-end mb-4">
+        <button onclick="updateButton(this, '0xIN')" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center">
+            <i class="icon sync mr-2"></i>Update
+        </button>
+    </div>
+    <div class="overflow-x-auto">
+        <p class="md:hidden text-sm text-gray-400 mb-2 sticky left-0">Scroll horizontally →</p>
+        <table class="min-w-full md:w-full">
+            <thead class="bg-gray-600">
+                <tr>
+                    <th class="text-left px-2 md:px-4 py-1 md:py-2">Name</th>
+                    <th class="text-left px-2 md:px-4 py-1 md:py-2">Package</th>
+                    <th class="text-left px-2 md:px-4 py-1 md:py-2">Version</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% pageData.forEach((app) => { %>
+                <tr class="border-b border-gray-600 hover:bg-gray-600">
+                    <td class="px-2 md:px-4 py-1 md:py-2 max-w-[300px] md:max-w-none truncate" title="<%= app.appName %>">
+                        <%= app.appName.substring(0,24) %>
+                    </td>
+                    <td class="px-2 md:px-4 py-1 md:py-2 max-w-[300px] md:max-w-none truncate" title="<%= app.packageName %>">
+                        <%= app.packageName %>
+                    </td>
+                    <td class="px-2 md:px-4 py-1 md:py-2 max-w-[300px] md:max-w-none truncate" title="<%= app.versionName %>">
+                        <%= app.versionName.substring(0,12) %>
+                    </td>
+                </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+</div>

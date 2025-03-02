@@ -1,0 +1,17 @@
+<div class="bg-gradient-to-br from-gray-700 to-gray-800 rounded-xl p-6 mb-6 shadow-lg ring-1 ring-gray-600/30">
+    <div class="flex justify-end mb-6">
+        <button onclick="updateButton(this, '0xPM')" 
+                class="group bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-6 py-2.5 rounded-lg flex items-center space-x-2 transform transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5">
+            <i class="icon sync mr-2 group-hover:rotate-180 transition-transform duration-500"></i>
+            <span>Update</span>
+        </button>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <% pageData.forEach((permission) => { %>
+        <div class="bg-gradient-to-br from-gray-600/80 to-gray-700/80 backdrop-blur-sm p-4 rounded-lg shadow-md hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 ring-1 ring-gray-500/30 hover:ring-blue-500/30">
+            <span class="text-gray-200 font-medium break-words"><%= permission %></span>
+        </div>
+        <% }) %>
+    </div>
+</div>

@@ -1,0 +1,40 @@
+<div class="bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg p-4 mb-4 shadow-lg ring-1 ring-gray-700/30">
+    <div class="flex justify-between items-center mb-4">
+        <h2 class="text-lg font-semibold text-gray-100">Downloads</h2>
+    </div>
+    <div class="overflow-x-auto rounded-lg bg-gradient-to-br from-gray-700/50 to-gray-800/50 backdrop-blur-sm ring-1 ring-gray-600/20">
+        <table class="w-full min-w-[600px]">
+            <thead>
+                <tr class="border-b border-gray-600/30">
+                    <th class="py-3 px-4 text-left text-base font-semibold text-gray-100">Time</th>
+                    <th class="py-3 px-4 text-left text-base font-semibold text-gray-100">File Name</th>
+                    <th class="py-3 px-4 text-right text-base font-semibold text-gray-100">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-700/30">
+                <% pageData.forEach((item) => { %>
+                <tr class="group hover:bg-gray-700/40 transition-all duration-200">
+                    <td class="py-2 px-4">
+                        <span class="text-gray-300 text-sm"><%= new Date(item.time).toLocaleString('en-GB', { timeZone: 'UTC' }) %></span>
+                    </td>
+                    <td class="py-2 px-4">
+                        <span class="text-gray-200 text-sm truncate block max-w-[300px]"><%= item.originalName %></span>
+                    </td>
+                    <td class="py-2 px-4 text-right space-x-2">
+                        <a href="<%= item.path %>" target="_blank" 
+                           class="group inline-flex items-center space-x-2 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-3 py-1.5 rounded-md transform transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 text-sm">
+                            <i class="fas fa-external-link-alt group-hover:scale-110 transition-transform"></i>
+                            <span class="hidden md:inline">Open</span>
+                        </a>
+                        <a href="<%= item.path %>" download="<%= item.originalName %>" 
+                           class="group inline-flex items-center space-x-2 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-3 py-1.5 rounded-md transform transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 text-sm">
+                            <i class="fas fa-download group-hover:scale-110 transition-transform"></i>
+                            <span class="hidden md:inline">Save</span>
+                        </a>
+                    </td>
+                </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+</div>

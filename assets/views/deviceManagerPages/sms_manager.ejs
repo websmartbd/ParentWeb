@@ -1,0 +1,104 @@
+<div class="bg-gray-700 rounded-lg p-4 mb-4">
+    <div class="flex border-b border-gray-600 mb-4">
+        <button class="px-4 py-2 font-medium text-gray-400 hover:text-white border-b-2 border-transparent data-[active]:border-green-400 data-[active]:text-green-400" 
+                data-tab="first" data-active="true">SMS Log</button>
+        <button class="px-4 py-2 font-medium text-gray-400 hover:text-white border-b-2 border-transparent data-[active]:border-green-400 data-[active]:text-green-400" 
+                data-tab="second">Send SMS</button>
+    </div>
+
+    <div data-tab-content="first" class="space-y-4">
+        <div class="flex justify-end">
+            <button onclick="updateButton(this, '0xSM', {'action': 'ls'})" 
+                    class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center">
+                <i class="icon sync mr-2"></i>Update
+            </button>
+        </div>
+        
+        <div class="space-y-4">
+            <% pageData.forEach((smsData) => { %>
+            <div class="bg-gray-600 p-4 rounded-lg">
+                <div class="flex items-start gap-3">
+                    <i class="icon arrow <%= smsData.type === '1' ? 'down' : 'up' %> text-blue-400 mt-1"></i>
+                    <div class="flex-1">
+                        <div class="flex justify-between items-baseline">
+                            <div class="font-medium">
+                                <%= smsData.type === '1' ? 'Received from' : 'Sent to' %>
+                                <a href="?filter=<%= smsData.address %>" class="text-blue-400 hover:text-blue-300">
+                                    <%= smsData.address %>
+                                </a>
+                            </div>
+                            <span class="text-sm text-gray-400">
+                                <%= new Date(parseInt(smsData.date)).toLocaleString('en-GB', { timeZone: 'UTC' }) %>
+                            </span>
+                        </div>
+                        <p class="mt-2 text-gray-300"><%= smsData.body %></p>
+                    </div>
+                </div>
+            </div>
+            <% }) %>
+        </div>
+    </div>
+
+    <div data-tab-content="second" class="hidden space-y-4">
+        <div class="space-y-4">
+            <div class="flex items-center gap-2 bg-gray-600 p-2 rounded">
+                <span class="text-gray-400">To:</span>
+                <input type="number" id="to" class="bg-transparent flex-1 text-white focus:outline-none">
+            </div>
+            <textarea id="sms" class="w-full bg-gray-600 text-white rounded-lg p-3 focus:outline-none" 
+                      rows="4" placeholder="Message"></textarea>
+            <button onclick="sendSMS(this)" 
+                    class="w-full bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg flex items-center justify-center">
+                <i class="icon paper plane outline mr-2"></i>
+                Send Message
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function sendSMS(element) {
+        $(element).addClass('loading')
+        sendCommand('0xSM', {
+            'action': 'sendSMS',
+            'sms': $('#sms').val(),
+            'to': $('#to').val()
+        }, (error, message) => {
+            if (error) {
+                setTimeout(() => {
+                    showNotification('#f03434', error)
+                    $(element).removeClass('loading')
+                }, 300)
+            } else {
+                setTimeout(() => {
+                    $(element).removeClass('loading');
+                    if (message === 'Requested') showNotification('#2ecc71', 'SMS Sent');
+                    else showNotification('#2ecc71', message);
+                }, 300)
+            }
+        });
+    }
+
+    // Tab switching functionality
+    document.querySelectorAll('[data-tab]').forEach(tab => {
+        tab.addEventListener('click', () => {
+            const tabName = tab.dataset.tab;
+            
+            // Remove active state from all tabs
+            document.querySelectorAll('[data-tab]').forEach(t => {
+                t.dataset.active = "false";
+            });
+            
+            // Set active state on clicked tab
+            tab.dataset.active = "true";
+            
+            // Hide all tab contents
+            document.querySelectorAll('[data-tab-content]').forEach(content => {
+                content.classList.add('hidden');
+            });
+            
+            // Show selected tab content
+            document.querySelector(`[data-tab-content="${tabName}"]`).classList.remove('hidden');
+        });
+    });
+</script>
