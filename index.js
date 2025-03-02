@@ -1,7 +1,7 @@
 /*
- *   TecSpy
- *   An Android Spying Tool
- *   By Team TecSpy
+ *   ParentWeb
+ *   A Simple Parental Tool
+ *   By Team ParentWeb
  */
 
 const express = require('express'),

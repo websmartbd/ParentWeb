@@ -1,7 +1,7 @@
 {
-    "name": "TecSpy",
+    "name": "ParentWeb",
     "version": "1.0.0",
-    "description": "TecSpy - Remote Android Tool",
+    "description": "ParentWeb - Remote Android Tool",
     "main": "index.js",
     "scripts": {
         "start": "node index.js",
