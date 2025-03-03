@@ -7,12 +7,11 @@
         <script>
             var baseURL = '<%= baseURL %>';
         </script>
-            <!-- Update main content area -->
-            <div class="flex min-h-screen">
-                <% include partials/deviceManagerMenu.ejs %>
-                 
-                <!-- Main Content -->
-                <div class="flex-1 p-2 sm:p-4 md:p-6 lg:p-8 mt-12 md:mt-0 overflow-x-hidden">
+        <% include partials/deviceManagerMenu.ejs %>
+        <!-- Main content wrapper -->
+        <div class="relative min-h-screen">
+            <!-- Main Content -->
+            <div class="flex-1 p-2 sm:p-4 md:p-6 lg:p-8 mt-16 md:mt-20 overflow-x-hidden ml-0 transition-all duration-300" id="main-content">
                     <% include partials/disclaimer.ejs %>
                     <div class="mt-4 md:mt-6">
                         <% 

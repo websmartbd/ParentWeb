@@ -18,41 +18,138 @@
 
     <div class="mt-6 space-y-2">
         <% pageData.forEach((item) => { %>
-        <div class="flex items-center justify-between bg-gray-600 p-3 rounded hover:bg-gray-500">
-            <div>
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between bg-gray-600 p-3 rounded hover:bg-gray-500 space-y-2 sm:space-y-0">
+            <div class="flex-1">
                 <p class="text-sm"><%= new Date(item.time).toLocaleString('en-GB', { timeZone: 'UTC' }) %></p>
-                <p class="text-gray-300"><%= item.originalName %></p>
+                <div class="mt-2">
+                    <div class="w-full bg-gray-700 rounded h-1 audio-progress" data-audio-path="<%= item.path %>">
+                        <div class="bg-blue-500 h-full w-0 audio-progress-bar"></div>
+                    </div>
+                    <div class="flex justify-between text-xs text-gray-400 mt-1">
+                        <span class="audio-current-time">0:00</span>
+                        <span class="audio-duration">0:00</span>
+                    </div>
+                </div>
             </div>
-            <div class="flex gap-2">
-                <button onclick="playClip('<%= item.path %>')" 
-                        class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded">
-                    Play
+            <div class="flex gap-2 ml-4">
+                <button onclick="playClip('<%= item.path %>', this)" 
+                        class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded flex-1 sm:flex-none text-center">
+                    <i class="fas fa-play"></i>
                 </button>
                 <a href="<%= item.path %>" download="<%= item.originalName %>" 
-                   class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded">
-                    Save
+                   class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded flex-1 sm:flex-none text-center">
+                    <i class="fas fa-download"></i>
                 </a>
             </div>
         </div>
         <% }) %>
     </div>
-</div>
 
 <audio id="player">
     <source id="audioSource" src="" type="audio/mpeg">
-    </source>
     Your browser does not support the audio element.
 </audio>
 
 <script>
-    function playClip(input) {
-        var player = document.getElementById('player');
-        $("#audioSource").attr("src", input);
-        player.load();
-        var playPromise = player.play();
-        if (playPromise !== undefined) playPromise.then(_ => { }).catch(error => { });
+    let currentPlayingButton = null;
+    let currentAudioPath = null;
+
+    function formatTime(seconds) {
+        const minutes = Math.floor(seconds / 60);
+        const remainingSeconds = Math.floor(seconds % 60);
+        return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
     }
 
+    function playClip(input, button) {
+        const player = document.getElementById('player');
+        const audioSource = document.getElementById('audioSource');
+        
+        // Reset previous button if exists
+        if (currentPlayingButton) {
+            currentPlayingButton.querySelector('i').className = 'fas fa-play';
+        }
+    
+        // If clicking the same audio that's currently playing
+        if (currentAudioPath === input && !player.paused) {
+            player.pause();
+            button.querySelector('i').className = 'fas fa-play';
+            currentPlayingButton = null;
+            currentAudioPath = null;
+            return;
+        }
+    
+        // Setup new audio
+        currentPlayingButton = button;
+        currentAudioPath = input;
+        audioSource.src = input;
+        player.load();
+    
+        const playPromise = player.play();
+        if (playPromise !== undefined) {
+            playPromise.then(_ => {
+                button.querySelector('i').className = 'fas fa-pause';
+                updateAudioProgress(input);
+            }).catch(error => {
+                console.error('Playback failed:', error);
+            });
+        }
+    }
+
+    function updateAudioProgress(audioPath) {
+        const player = document.getElementById('player');
+        const progressBar = document.querySelector(`[data-audio-path="${audioPath}"] .audio-progress-bar`);
+        const currentTimeEl = progressBar.parentElement.parentElement.querySelector('.audio-current-time');
+        const durationEl = progressBar.parentElement.parentElement.querySelector('.audio-duration');
+
+        // Update duration once it's available
+        player.addEventListener('loadedmetadata', () => {
+            durationEl.textContent = formatTime(player.duration);
+        });
+
+        // Update progress bar and current time
+        player.addEventListener('timeupdate', () => {
+            if (currentAudioPath === audioPath) {
+                const progress = (player.currentTime / player.duration) * 100;
+                progressBar.style.width = `${progress}%`;
+                currentTimeEl.textContent = formatTime(player.currentTime);
+            }
+        });
+
+        // Reset when audio ends
+        player.addEventListener('ended', () => {
+            if (currentAudioPath === audioPath) {
+                progressBar.style.width = '0%';
+                currentTimeEl.textContent = '0:00';
+                currentPlayingButton.textContent = 'Play';
+                currentPlayingButton = null;
+                currentAudioPath = null;
+            }
+        });
+
+        // Make progress bar clickable
+        const progressContainer = progressBar.parentElement;
+        progressContainer.addEventListener('click', (e) => {
+            if (currentAudioPath === audioPath) {
+                const rect = progressContainer.getBoundingClientRect();
+                const pos = (e.clientX - rect.left) / rect.width;
+                player.currentTime = pos * player.duration;
+                
+                // Update progress bar immediately for better visual feedback
+                progressBar.style.width = `${(pos * 100)}%`;
+                currentTimeEl.textContent = formatTime(pos * player.duration);
+            }
+        });
+
+        // Add hover effect for better UX
+        progressContainer.style.cursor = 'pointer';
+        progressContainer.addEventListener('mousemove', (e) => {
+            if (currentAudioPath === audioPath) {
+                const rect = progressContainer.getBoundingClientRect();
+                const pos = (e.clientX - rect.left) / rect.width;
+                progressContainer.title = formatTime(pos * player.duration);
+            }
+        });
+    }
 </script>
 
 <script>
