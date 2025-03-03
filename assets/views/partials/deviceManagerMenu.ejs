@@ -94,11 +94,14 @@
 <div id="sidebar-overlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-0 hidden transition-opacity duration-300"></div>
 
 <!-- Sidebar Toggle Script -->
+
+<!-- Sidebar Toggle Script -->
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const sidebarToggle = document.getElementById('sidebar-toggle');
         const sidebar = document.getElementById('sidebar');
-        const overlay = document.getElementById('sidebar-overlay');        const mainContent = document.getElementById('main-content');
+        const overlay = document.getElementById('sidebar-overlay');
+        const mainContent = document.getElementById('main-content');
 
         function toggleSidebar() {
             sidebar.classList.toggle('-translate-x-full');
@@ -110,21 +113,45 @@
         overlay.addEventListener('click', toggleSidebar);
     });
 </script>
+
 <style>
-@media (min-width: 768px) {
-    #main-content {
-        margin-left: 16rem;
-        width: calc(100% - 16rem);
+    @media (min-width: 768px) {
+        #main-content {
+            margin-left: 16rem;
+            width: calc(100% - 16rem);
+            transition: margin-left 0.3s ease-in-out, width 0.3s ease-in-out;
+        }
+        #sidebar-overlay {
+            display: none !important;
+        }
+        #sidebar-toggle {
+            display: none;
+        }
+        #sidebar {
+            height: 100vh;
+            position: fixed;
+        }
     }
-    #sidebar-overlay {
-        display: none !important;
+
+    @media (max-width: 767px) {
+        #main-content {
+            width: 100%;
+            margin-left: 0;
+            transition: margin-left 0.3s ease-in-out;
+        }
     }
-    #sidebar-toggle {
-        display: none;
+
+    /* Sidebar Item Hover Effects */
+    #sidebar a:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+        transform: scale(1.05);
+        transition: all 0.3s ease-in-out;
     }
-    #sidebar {
-        height: 100vh;
-        position: fixed;
+
+    /* Enhanced Button Hover Effect */
+    #sidebar-toggle:hover,
+    .text-gray-300:hover {
+        transform: scale(1.1);
+        transition: transform 0.3s ease-in-out;
     }
-}
 </style>
