@@ -3,7 +3,7 @@
         <!-- Logo Section -->
         <div class="flex items-center">
             <!-- Sidebar Toggle Button -->
-            <button id="sidebar-toggle" class="p-2 mr-3 text-gray-400 hover:text-white hover:bg-gray-700 rounded-lg transition-all duration-200">
+            <button id="sidebar-toggle" class="p-2 mr-3 text-gray-400 hover:text-white hover:bg-gray-700 rounded-lg transition-all duration-200 md:hidden">
                 <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                 </svg>
@@ -13,18 +13,18 @@
             </a>
         </div>
 
-<!-- Right Side - Round Power Button -->
-<div class="flex items-center space-x-6">
-    <a href="/logout" 
-        class="flex items-center justify-center text-gray-300 hover:text-white bg-gray-800 hover:bg-red-600 w-12 h-12 rounded-full shadow-lg transition-all duration-300 ease-in-out transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-red-500">
-        <i class="fa-solid fa-power-off text-xl"></i>
-    </a>
-</div>
+        <!-- Right Side - Round Power Button -->
+        <div class="flex items-center space-x-6">
+            <a href="/logout" 
+                class="flex items-center justify-center text-gray-300 hover:text-white bg-gray-800 hover:bg-red-600 w-12 h-12 rounded-full shadow-lg transition-all duration-300 ease-in-out transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-red-500">
+                <i class="fa-solid fa-power-off text-xl"></i>
+            </a>
+        </div>
     </div>
 </nav>
 
 <!-- Sidebar -->
-<div id="sidebar" class="fixed left-0 top-0 w-64 h-screen bg-gradient-to-b from-gray-800 to-gray-900 text-white transition-transform duration-300 ease-in-out z-10 pt-20 shadow-xl md:translate-x-0 -translate-x-full overflow-y-auto">
+<div id="sidebar" class="fixed left-0 top-0 w-64 h-screen bg-gradient-to-b from-gray-800 to-gray-900 text-white transition-transform duration-300 ease-in-out z-10 pt-20 shadow-xl -translate-x-full md:translate-x-0 overflow-y-auto">
     <div class="p-4">
         <ul class="space-y-2">
             <li>
@@ -72,7 +72,6 @@
             <li>
                 <a href="<%= baseURL %>/permissions" class="flex items-center p-3 rounded-lg hover:bg-gray-700/50 transition-all group">
                     <i class="fas fa-tasks w-5 h-5 mr-3 text-orange-400 group-hover:text-orange-300 transition-colors"></i>
-
                     <span class="font-medium">Permissions</span>
                 </a>
             </li>
@@ -99,11 +98,8 @@
 </div>
 
 <!-- Overlay -->
-<div id="sidebar-overlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-0 hidden transition-opacity duration-300"></div>
+<div id="sidebar-overlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-0 hidden transition-opacity duration-300 md:hidden"></div>
 
-<!-- Sidebar Toggle Script -->
-
-<!-- Sidebar Toggle Script -->
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const sidebarToggle = document.getElementById('sidebar-toggle');
@@ -114,11 +110,25 @@
         function toggleSidebar() {
             sidebar.classList.toggle('-translate-x-full');
             overlay.classList.toggle('hidden');
-            mainContent.classList.toggle('ml-64');
+            if (window.innerWidth >= 768) {
+                mainContent.classList.toggle('md:ml-64');
+            }
         }
 
         sidebarToggle.addEventListener('click', toggleSidebar);
         overlay.addEventListener('click', toggleSidebar);
+
+        // Handle window resize
+        window.addEventListener('resize', function() {
+            if (window.innerWidth >= 768) {
+                sidebar.classList.remove('-translate-x-full');
+                overlay.classList.add('hidden');
+                mainContent.classList.add('md:ml-64');
+            } else {
+                sidebar.classList.add('-translate-x-full');
+                mainContent.classList.remove('md:ml-64');
+            }
+        });
     });
 </script>
 
@@ -128,12 +138,6 @@
             margin-left: 16rem;
             width: calc(100% - 16rem);
             transition: margin-left 0.3s ease-in-out, width 0.3s ease-in-out;
-        }
-        #sidebar-overlay {
-            display: none !important;
-        }
-        #sidebar-toggle {
-            display: none;
         }
         #sidebar {
             height: 100vh;
@@ -149,18 +153,15 @@
         }
     }
 
-    /* Sidebar Item Hover Effects */
     #sidebar a:hover {
         background-color: rgba(255, 255, 255, 0.1);
-        transform: scale(1.05);
-        transition: all 0.3s ease-in-out;
+        transform: scale(1.02);
+        transition: all 0.2s ease-in-out;
     }
 
-    /* Enhanced Button Hover Effect */
     #sidebar-toggle:hover,
     .text-gray-300:hover {
-        transform: scale(1.1);
-        transition: transform 0.3s ease-in-out;
+        transform: scale(1.05);
+        transition: transform 0.2s ease-in-out;
     }
-
 </style>
