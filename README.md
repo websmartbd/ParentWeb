@@ -10,9 +10,7 @@
  	<li>Call Logs</li>
  	<li>View Installed Apps</li>
  	<li>View Stub Permissions</li>
- 	<li>Live Clipboard Logging</li>
  	<li>Live Notification Logging (WhatsApp, Facebook, Instagram, Gmail, and more ....)</li>
- 	<li>View WiFi Networks (logs previously seen)</li>
  	<li>File Explorer &amp; Downloader</li>
  	<li>Command Queuing</li>
  	<li>Device Admin</li>
