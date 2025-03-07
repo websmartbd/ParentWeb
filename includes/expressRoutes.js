@@ -40,7 +40,7 @@ routes.get('/dl', (req, res) => {
 // });
 
 routes.get('/', (req, res) => {
-    res.redirect('/login')
+    res.render('welcome');
 });
 
 routes.get('/login', (req, res) => {

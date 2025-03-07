@@ -48,6 +48,24 @@ IO.on('connection', (socket) => {
 		},
 	});
 
+	// Handle device status check requests
+	socket.on('check_device_status', (deviceId) => {
+		const isOnline = clientManager.clientConnections[deviceId] !== undefined;
+		socket.emit('device_status', { deviceId, status: isOnline ? 'online' : 'offline' });
+	});
+
+	// Broadcast status changes when devices connect/disconnect
+	socket.on('disconnect', () => {
+		if (clientParams.id) {
+			IO.emit('device_status', { deviceId: clientParams.id, status: 'offline' });
+		}
+	});
+
+	// Emit initial status
+	if (clientParams.id) {
+		IO.emit('device_status', { deviceId: clientParams.id, status: 'online' });
+	}
+
 	if (CONST.debug) {
 		var onevent = socket.onevent;
 		socket.onevent = function (packet) {
