@@ -102,7 +102,7 @@
                         <span class="relative z-10">Features</span>
                         <div class="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 transform -translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
                     </a>
-                    <a href="" class="nav-link group relative overflow-hidden">
+                    <a href="https://bmshifat.zya.me/" class="nav-link group relative overflow-hidden">
                         <span class="relative z-10">Contact</span>
                         <div class="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 transform -translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
                     </a>
@@ -117,11 +117,10 @@
         </nav>
 
         <!-- Hero Content -->
-        <div class="container mx-auto px-4 relative z-10 mt-20">
+        <div class="container mx-auto px-6 sm:px-8 lg:px-12 relative z-10 mt-20">
             <div class="flex flex-wrap items-center justify-between">
                 <div class="w-full lg:w-1/2 text-center lg:text-left mb-12 lg:mb-0">
-                    <h1 class="text-5xl lg:text-7xl font-bold mb-8 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 animate-gradient-x">Next-Gen
-Monitoring Solution</h1>
+                    <h1 class="text-5xl lg:text-7xl font-bold mb-8 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 animate-gradient-x">Next-Gen Monitoring Solution</h1>
                     <p class="text-gray-300 text-lg lg:text-xl mb-10 leading-relaxed max-w-2xl mx-auto lg:mx-0">Experience unparalleled device monitoring capabilities with our cutting-edge solution. Secure, efficient, and powerful.</p>
                     <div class="flex flex-col sm:flex-row justify-center lg:justify-start space-y-4 sm:space-y-0 sm:space-x-6">
                         <a href="/login" class="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-medium text-white bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg overflow-hidden transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-blue-500/25">
@@ -138,7 +137,7 @@ Monitoring Solution</h1>
                 <div class="w-full lg:w-5/12">
                     <div class="relative">
                         <div class="absolute -inset-4 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg blur opacity-25 group-hover:opacity-40 transition duration-1000 group-hover:duration-200 animate-pulse"></div>
-                        <img src="/img/hacker.png" alt="Monitoring Dashboard" class="relative rounded-lg transform hover:scale-105 transition-all duration-500 hover:shadow-2xl">
+                        <img src="/img/hero.png" alt="Monitoring Dashboard" class="relative rounded-lg transform hover:scale-105 transition-all duration-500 hover:shadow-2xl">
                     </div>
                 </div>
             </div>
@@ -156,7 +155,8 @@ Monitoring Solution</h1>
     <!-- Features Section -->
     <section id="features" class="py-24 bg-gradient-to-b from-gray-900 via-gray-900/95 to-gray-800 relative overflow-hidden">
         <div class="absolute inset-0 bg-[url('/img/grid.png')] opacity-5"></div>
-        <div class="container mx-auto px-4 relative z-10">
+        <div class="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 animate-pulse"></div>
+        <div class="container mx-auto px-6 sm:px-8 lg:px-12 relative z-10">
             <div class="text-center mb-16">
                 <h2 class="text-4xl lg:text-5xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400 animate-gradient-x">Powerful Features</h2>
                 <p class="text-gray-400 text-xl max-w-3xl mx-auto leading-relaxed">Discover the comprehensive suite of tools and capabilities at your fingertips</p>
@@ -164,35 +164,38 @@ Monitoring Solution</h1>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                 <% const features = [
-                    { name: 'View Call Logs', icon: 'fa-solid fa-phone-volume' },
-                    { name: 'View Messages', icon: 'fa-solid fa-message' },
-                    { name: 'View Contacts', icon: 'fa-solid fa-address-book' },
-                    { name: 'Get Location of Device', icon: 'fa-solid fa-location-dot' },
-                    { name: 'File Explorer & Downloader', icon: 'fa-solid fa-folder-open' },
-                    { name: 'Microphone Recording', icon: 'fa-solid fa-microphone' },
-                    { name: 'View WiFi Networks', icon: 'fa-solid fa-wifi' },
-                    { name: 'Live Clipboard Logging', icon: 'fa-solid fa-clipboard' },
-                    { name: 'View Installed Apps', icon: 'fa-solid fa-mobile-screen' },
-                    { name: 'Monitor Skype/Telegram', icon: 'fa-brands fa-telegram' },
-                    { name: 'App auto-hide', icon: 'fa-solid fa-eye-slash' },
-                    { name: 'Whatsapp Chats', icon: 'fa-brands fa-whatsapp' },
-                    { name: 'Instagram Chats', icon: 'fa-brands fa-instagram' },
-                    { name: 'Messenger Chats', icon: 'fa-brands fa-facebook-messenger' },
-                    { name: 'Tinder Chats', icon: 'fa-solid fa-heart' },
-                    { name: 'Bypass PlayProtect', icon: 'fa-solid fa-shield' },
-                    { name: 'Undetectable by AntiVirus', icon: 'fa-solid fa-virus-slash' },
-                    { name: 'Command Queuing', icon: 'fa-solid fa-terminal' },
-                    { name: 'Inbuilt Apk Builder', icon: 'fa-solid fa-hammer' },
-                    { name: 'Many more Features!', icon: 'fa-solid fa-ellipsis' }
+                    { name: 'View Call Logs', icon: 'fa-solid fa-phone-volume', description: 'Monitor incoming and outgoing calls with detailed logs' },
+                    { name: 'View Messages', icon: 'fa-solid fa-message', description: 'Track SMS and messaging activity in real-time' },
+                    { name: 'View Contacts', icon: 'fa-solid fa-address-book', description: 'Access complete contact information and history' },
+                    { name: 'Get Location of Device', icon: 'fa-solid fa-location-dot', description: 'Track device location with precision GPS data' },
+                    { name: 'File Explorer & Downloader', icon: 'fa-solid fa-folder-open', description: 'Browse and manage device files remotely' },
+                    { name: 'Microphone Recording', icon: 'fa-solid fa-microphone', description: 'Capture audio from the device environment' },
+                    { name: 'View WiFi Networks', icon: 'fa-solid fa-wifi', description: 'Monitor connected networks and history' },
+                    { name: 'Live Clipboard Logging', icon: 'fa-solid fa-clipboard', description: 'Track all copied and pasted content' },
+                    { name: 'View Installed Apps', icon: 'fa-solid fa-mobile-screen', description: 'Monitor installed applications and usage' },
+                    { name: 'Monitor Skype/Telegram', icon: 'fa-brands fa-telegram', description: 'Track messaging activity on popular platforms' },
+                    { name: 'App auto-hide', icon: 'fa-solid fa-eye-slash', description: 'Stealth mode for discreet monitoring' },
+                    { name: 'Whatsapp Chats', icon: 'fa-brands fa-whatsapp', description: 'Monitor WhatsApp conversations and media' },
+                    { name: 'Instagram Chats', icon: 'fa-brands fa-instagram', description: 'Track Instagram DMs and activity' },
+                    { name: 'Messenger Chats', icon: 'fa-brands fa-facebook-messenger', description: 'Monitor Facebook Messenger conversations' },
+                    { name: 'Tinder Chats', icon: 'fa-brands fa-heart', description: 'Track dating app conversations and matches' },
+                    { name: 'Bypass PlayProtect', icon: 'fa-solid fa-shield', description: 'Advanced security bypass capabilities' },
+                    { name: 'Undetectable by AntiVirus', icon: 'fa-solid fa-virus-slash', description: 'Stealth operation avoiding detection' },
+                    { name: 'Command Queuing', icon: 'fa-solid fa-terminal', description: 'Schedule and manage monitoring tasks' },
+                    { name: 'Inbuilt Apk Builder', icon: 'fa-solid fa-hammer', description: 'Create custom monitoring solutions' },
+                    { name: 'Many more Features!', icon: 'fa-solid fa-ellipsis', description: 'Continuously updated with new capabilities' }
                 ] %>
                 
                 <% features.forEach(feature => { %>
                 <div class="group p-6 bg-gray-800/50 backdrop-blur-sm rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-gray-700/50 hover:border-blue-500/30 relative overflow-hidden">
                     <div class="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     <div class="absolute -inset-0.5 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg blur opacity-0 group-hover:opacity-25 transition duration-500"></div>
-                    <div class="flex items-center space-x-4">
-                        <i class="<%= feature.icon %> text-3xl text-blue-400 group-hover:text-blue-300 transition-colors duration-300"></i>
-                        <p class="text-lg font-medium text-gray-200 relative z-10 group-hover:text-white transition-colors duration-300"><%= feature.name %></p>
+                    <div class="relative z-10 space-y-4">
+                        <div class="flex items-center space-x-4 mb-3">
+                            <i class="<%= feature.icon %> text-3xl text-blue-400 group-hover:text-blue-300 transition-colors duration-300"></i>
+                            <h3 class="text-lg font-medium text-gray-200 group-hover:text-white transition-colors duration-300"><%= feature.name %></h3>
+                        </div>
+                        <p class="text-gray-400 text-sm group-hover:text-gray-300 transition-colors duration-300"><%= feature.description %></p>
                     </div>
                 </div>
                 <% }) %>
@@ -203,13 +206,13 @@ Monitoring Solution</h1>
     <!-- Footer -->
     <footer class="bg-gray-900 py-12 relative overflow-hidden">
         <div class="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5"></div>
-        <div class="container mx-auto px-4 relative z-10">
+        <div class="container mx-auto px-6 sm:px-8 lg:px-12 relative z-10">
             <div class="flex flex-wrap justify-between items-center">
                 <div class="w-full md:w-auto mb-6 md:mb-0 text-center md:text-left">
                     <p class="text-xl text-gray-300">Made With <span class="text-red-500 animate-pulse">❤️</span> By BM Shifat</p>
                 </div>
                 <div class="w-full md:w-auto text-center">
-                    <a href="https://bmshifat.alnk.host/" class="inline-flex items-center px-6 py-3 text-lg font-medium rounded-lg text-white bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-blue-500/25">
+                    <a href="https://bmshifat.zya.me/" class="inline-flex items-center px-6 py-3 text-lg font-medium rounded-lg text-white bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-blue-500/25">
                         Official Website
                         <svg class="ml-2 -mr-1 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
@@ -238,7 +241,8 @@ Monitoring Solution</h1>
         }
 
         .mobile-nav-link {
-            @apply text-gray-300 hover:text-white text-xl font-medium transition-all
+            @apply text-gray-300 hover:text-white text-xl font-medium transition-all;
+        }
         
         .animate-gradient {
             animation: gradient 8s ease infinite;
@@ -253,6 +257,22 @@ Monitoring Solution</h1>
         }
         
         @keyframes gradient {
-            0% { background-position: 0%
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes gradientX {
+            0% { background-size: 200% 200%; background-position: left center; }
+            50% { background-size: 200% 200%; background-position: right center; }
+            100% { background-size: 200% 200%; background-position: left center; }
+        }
+
+        @keyframes ripple {
+            0% { transform: scale(0.8); opacity: 0; }
+            50% { transform: scale(1.2); opacity: 0.3; }
+            100% { transform: scale(0.8); opacity: 0; }
+        }
+    </style>
     
     
